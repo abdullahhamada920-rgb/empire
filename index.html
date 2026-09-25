@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EM | إمبراطور المواقع</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #121212;
+      --panel: #171717;
+      --panel-2: #1f1f1f;
+      --line: rgba(255,255,255,0.08);
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --accent: #ff8c00;
+      --accent-2: #ffb347;
+      --green: #25d366;
+      --green-dark: #1ba852;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.7;
+      direction: rtl;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(17, 17, 17, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 12px 25px rgba(255, 140, 0, 0.25);
+      transition: 0.25s ease;
+    }
+
+    .nav-cta:hover {
+      background: #e67e00;
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(255, 140, 0, 0.16), transparent 28%),
+        linear-gradient(135deg, #0d0d0d 0%, #171717 45%, #101010 100%);
+      padding: 90px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 140, 0, 0.12);
+      border: 1px solid rgba(255, 140, 0, 0.4);
+      color: var(--accent-2);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .price-range {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255, 140, 0, 0.10), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255, 140, 0, 0.28);
+      box-shadow: 0 15px 35px rgba(255, 140, 0, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .price-range span {
+      color: var(--muted);
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .price-range strong {
+      color: var(--accent);
+      font-size: clamp(1.7rem, 2vw, 2.4rem);
+      font-weight: 900;
+    }
+
+    .price-range small {
+      color: var(--text);
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .price-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 30px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #e67e00);
+      color: #fff;
+      box-shadow: 0 15px 35px rgba(255, 140, 0, 0.25);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(255, 140, 0, 0.32);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .btn.secondary:hover {
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-box {
+      min-width: 130px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .stat-box span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .glass-card {
+      width: min(100%, 420px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    .mini-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .mini-panel h3 {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .mini-panel p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      background: rgba(255, 140, 0, 0.1);
+      border: 1px solid rgba(255, 140, 0, 0.2);
+      color: var(--accent-2);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .services {
+      padding: 90px 0;
+      background: #0d0d0d;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .section-header h2 {
+      color: var(--accent);
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #171717, #111111);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 140, 0, 0.5);
+      box-shadow: 0 18px 35px rgba(255,140,0,0.08);
+    }
+
+    .card .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 140, 0, 0.12);
+      border: 1px solid rgba(255, 140, 0, 0.2);
+      font-size: 2rem;
+    }
+
+    .card h3 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.35rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .process {
+      background: #111;
+      padding: 80px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      margin-top: 40px;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-number {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(255,140,0,0.22);
+    }
+
+    .step h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      margin-top: 18px;
+      font-size: 1.2rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .pricing {
+      padding: 90px 0;
+      background: linear-gradient(180deg, #0d0d0d, #101010);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .price-card {
+      background: linear-gradient(180deg, #171717, #121212);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 26px 20px;
+      position: relative;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .price-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 140, 0, 0.5);
+      box-shadow: 0 18px 35px rgba(255,140,0,0.08);
+    }
+
+    .price-card.popular {
+      border-color: rgba(255, 140, 0, 0.6);
+      background: linear-gradient(180deg, rgba(255,140,0,0.08), #171717);
+    }
+
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .price-card h3 {
+      color: #fff;
+      font-size: 1.4rem;
+      margin: 18px 0 12px;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .price small {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .price-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px;
+      color: var(--muted);
+    }
+
+    .price-card li {
+      margin: 10px 0;
+      font-size: 0.96rem;
+    }
+
+    .price-card .btn {
+      width: 100%;
+    }
+
+    .contact {
+      padding: 90px 0 100px;
+      background: linear-gradient(180deg, #0d0d0d, #0a0a0a);
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, rgba(255,140,0,0.12), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255, 140, 0, 0.25);
+      border-radius: 24px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-box h2 {
+      color: var(--accent);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 12px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .whatsapp-btn {
+      background: var(--green);
+      color: #fff;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: 0.25s ease;
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.25);
+    }
+
+    .whatsapp-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-3px);
+    }
+
+    .call-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-weight: 800;
+      transition: 0.25s ease;
+    }
+
+    .call-btn:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-3px);
+    }
+
+    footer {
+      background: #000;
+      color: #919191;
+      text-align: center;
+      padding: 24px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.93rem;
+    }
+
+    @media (max-width: 780px) {
+      .nav-inner {
+        flex-direction: column;
+        justify-content: center;
+        padding: 16px 0;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-actions,
+      .contact-actions {
+        flex-direction: column;
+      }
+
+      .btn,
+      .whatsapp-btn,
+      .call-btn {
+        width: 100%;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+
+      .brand {
+        font-size: 1.5rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand">EM | إمبراطور المواقع</div>
+
+      <div class="nav-links">
+        <a href="#services">خدماتنا</a>
+        <a href="#process">العملية</a>
+        <a href="#pricing">الباقات</a>
+        <a href="#contact">تواصل</a>
+        <a class="nav-cta" href="https://wa.me/201096730236?text=أنا%20عايز%20خدمة">اطلب الآن</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">حلول احترافية للمشاريع الرقمية</div>
+        <h1>مواقع احترافية <span>تجعل مشروعك يبرز</span></h1>
+        <p>
+          نصمم لك موقعًا أنيقًا وسهل الاستخدام يساعدك على زيادة المبيعات،
+          عرض خدماتك بشكل احترافي، وربط مشروعك مباشرة مع العملاء من خلال واتساب.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#contact">تواصل معنا</a>
+          <a class="btn secondary" href="#services">اكتشف خدماتنا</a>
+        </div>
+
+        <div class="price-range">
+          <span>سعر الموقع يبدأ من</span>
+          <strong>1500</strong>
+          <span>إلى</span>
+          <strong>3000</strong>
+          <small>جنيه مصري</small>
+        </div>
+        <div class="price-note">
+          مناسب لمواقع المطاعم، المحلات، الصفحات التجارية، وتصاميم الشركات<br>
+          حسب عدد الصفحات، نوع التصميم، والمميزات الإضافية المطلوبة.
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-box">
+            <strong>+120</strong>
+            <span>مشروع تم تنفيذه</span>
+          </div>
+          <div class="stat-box">
+            <strong>24/7</strong>
+            <span>دعم مستمر</span>
+          </div>
+          <div class="stat-box">
+            <strong>100%</strong>
+            <span>تجربة مخصصة</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="glass-card">
+          <div class="mini-panel">
+            <h3>تصميم متوافق مع الهاتف</h3>
+            <p>مواقع سريعة وجذابة تناسب كل الأجهزة وتزيد ثقة العملاء.</p>
+          </div>
+
+          <div class="mini-panel">
+            <h3>خدمات شاملة</h3>
+            <p>من تصميم المواقع، السوشيال ميديا، والواتساب إلى إعلانات وتجهيزات احترافية.</p>
+          </div>
+
+          <div class="tag-list">
+            <span class="tag">مواقع المطاعم</span>
+            <span class="tag">متاجر</span>
+            <span class="tag">محلات</span>
+            <span class="tag">إعلانات</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2>خدماتنا</h2>
+        <p>حلول رقمية متكاملة لمشروعك من البداية إلى النجاح.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🍽️</div>
+          <h3>مواقع المطاعم</h3>
+          <p>تصميم احترافي مع قائمة الطعام، عروض، وطلب مباشر عبر واتساب.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🏪</div>
+          <h3>مواقع المحلات</h3>
+          <p>عرض منتجاتك وخدماتك بشكل جذاب يرفع المبيعات ويزيد الثقة.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📱</div>
+          <h3>صفحات السوشيال</h3>
+          <p>إدارة محتوى احترافية للإنستغرام، فيسبوك، وغيرها لتوسيع الانتشار.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">💬</div>
+          <h3>ستيكرات واتساب</h3>
+          <p>تصميم رسائل وستيكرات مخصصة لتعزيز علامتك التجارية بشكل جذاب.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📈</div>
+          <h3>زيادة التفاعل</h3>
+          <p>خدمات تفاعل وتعزيز انتباه الجمهور لصفحاتك ومشروعاتك المختلفة.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🎨</div>
+          <h3>تصميمات مخصصة</h3>
+          <p>هوية بصرية، لوجو، بانرات، تصاميم احترافية تناسب نشاطك.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <h2>كيف نشتغل؟</h2>
+        <p>عملية بسيطة، واضحة، وتخدم احتياجك بدقة.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>التواصل الأولي</h3>
+          <p>نستمع إلى فكرتك، نشاطك، وأهدافك لنحدد أفضل تصميم وخطة التنفيذ.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>التصميم</h3>
+          <p>نقوم بإنشاء واجهة جذابة ومتوافقة مع الهوية البصرية لمشروعك.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>التنفيذ</h3>
+          <p>نُنجز الصفحة أو الموقع كاملًا مع الأزرار والروابط والتواصل المناسب.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3>الدعم</h3>
+          <p>نتابع معك بعد التسليم ونساعدك في التعديلات أو التحسينات المطلوبة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2>نظام الباقات</h2>
+        <p>اختر الباقة المناسبة لاحتياجك، مع مرونة التعديل والتحسين.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>تعديل واحد</h3>
+          <div class="price">15<small>جنيه</small></div>
+          <ul>
+            <li>تعديل واحد فقط</li>
+            <li>مناسب لطلبات بسيطة</li>
+            <li>إرسال سريع</li>
+          </ul>
+          <a class="btn primary" href="https://wa.me/201096730236?text=أرغب%20في%20باقة%20تعديل%20واحد">اختيار الباقة</a>
+        </div>
+
+        <div class="price-card">
+          <h3>5 تعديلات</h3>
+          <div class="price">65<small>جنيه</small></div>
+          <ul>
+            <li>5 تعديلات كاملة</li>
+            <li>أفضل للصفحات الصغيرة</li>
+            <li>دعم مرن</li>
+          </ul>
+          <a class="btn primary" href="https://wa.me/201096730236?text=أرغب%20في%20باقة%205%20تعديلات">اختيار الباقة</a>
+        </div>
+
+        <div class="price-card popular">
+          <div class="badge">الأكثر طلبًا</div>
+          <h3>10 تعديلات</h3>
+          <div class="price">120<small>جنيه</small></div>
+          <ul>
+            <li>10 تعديلات</li>
+            <li>مناسب للمواقع الصغيرة</li>
+            <li>تجربة احترافية</li>
+          </ul>
+          <a class="btn primary" href="https://wa.me/201096730236?text=أرغب%20في%20باقة%2010%20تعديلات">اختيار الباقة</a>
+        </div>
+
+        <div class="price-card">
+          <h3>20 تعديل</h3>
+          <div class="price">250<small>جنيه</small></div>
+          <ul>
+            <li>20 تعديل متنوع</li>
+            <li>مناسب للمتاجر والمشاريع</li>
+            <li>تحديث مستمر</li>
+          </ul>
+          <a class="btn primary" href="https://wa.me/201096730236?text=أرغب%20في%20باقة%2020%20تعديل">اختيار الباقة</a>
+        </div>
+
+        <div class="price-card">
+          <h3>تعديلات لا نهائية</h3>
+          <div class="price">400<small>جنيه</small></div>
+          <ul>
+            <li>تعديلات غير محدودة</li>
+            <li>أفضل خيار للشركات</li>
+            <li>دعم مستمر طوال الفترة</li>
+          </ul>
+          <a class="btn primary" href="https://wa.me/201096730236?text=أرغب%20في%20باقة%20تعديلات%20لا%20نهائية">اختيار الباقة</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <h2>تواصل معنا الآن</h2>
+        <p>إذا كنت تبحث عن موقع احترافي يعكس جودة مشروعك، نحن جاهزون لتنفذه لك.</p>
+
+        <div class="contact-actions">
+          <a class="whatsapp-btn" href="https://wa.me/201096730236?text=أنا%20عايز%20خدمة">💬 واتساب</a>
+          <a class="call-btn" href="tel:+201096730236">📞 اتصل الآن</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 EM | إمبراطور المواقع - جميع الحقوق محفوظة
+  </footer>
+
+</body>
+</html>
